@@ -6,7 +6,7 @@
  *             (direpresentasikan sebagai array of integer, masing-masing
  *             elemen menyatakan banyaknya box yang ada di tumpukan)
  */
-package sudokumodel;
+package sudoku;
 import java.util.*;
 import java.io.*;
 import javax.swing.JComboBox;

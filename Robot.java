@@ -2,7 +2,7 @@
  * robot adalah agen
  * kecerdasan (aksi) dari agen mestinya disimpan di kelas ini
  */
-package sudokumodel;
+package sudoku;
 /**
  *
  * Cecilia E. Nugraheni - Luciana Abednego

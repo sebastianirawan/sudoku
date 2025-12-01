@@ -3,7 +3,7 @@
  * yang nantinya akan diisi dengan Box angka
  * rasanya atribut posX dan posY tidak diperlukan di sini???
  */
-package sudokumodel;
+package sudoku;
 
 /**
  *
