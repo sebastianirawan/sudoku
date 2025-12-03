@@ -4,11 +4,13 @@
  */
 package sudoku;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Apple's 1
  */
-public class List {
+public class List implements Serializable{
     private int first; 
     private int last;
     private int length;

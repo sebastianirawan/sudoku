@@ -4,11 +4,13 @@
  */
 package sudoku;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Apple's 1
  */
-public class ListElement {
+public class ListElement implements Serializable{
     Cell cell;
 //    Position pos;
     int next;
