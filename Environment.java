@@ -14,7 +14,7 @@ import javax.swing.JComboBox;
  * Cecilia E. Nugraheni - Luciana Abednego
  * 2012
  */
-public class Environment {
+public class Environment implements Serializable{
     public static final int SIZE = 9;  
     int [] numbers = {SIZE,SIZE,SIZE,SIZE,SIZE,SIZE,SIZE,SIZE,SIZE};
     List FreeCellList; //cell kosong yang belum terisi box

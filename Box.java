@@ -4,11 +4,13 @@
  */
 package sudoku;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Apple's 1
  */
-public class Box {
+public class Box implements Serializable{
   private int Value;
   private int agentType;
 //  private int posX;

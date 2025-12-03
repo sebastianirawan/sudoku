@@ -5,11 +5,13 @@
  */
 package sudoku;
 
+import java.io.Serializable;
+
 /**
  *
  * Cecilia E. Nugraheni - Luciana Abednego
  */
-public class Cell {
+public class Cell implements Serializable{
   private Box box;
   private boolean fixed;
 //  int posX;
