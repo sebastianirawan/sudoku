@@ -16,21 +16,17 @@ public class SchedulerAgent extends Agent {
     protected void setup() {
         System.out.println("Scheduler Starting...");
 
-        // 1. Setup Environment
         env = new Environment();
-        // Ensure "soal11.txt" is in your project root!
         boolean loaded = env.readAPuzzle("sudoku_junior_1.txt");
         if(loaded) env.SetupBoxStacks();
         else System.out.println("Warning: Failed to load sudoku_junior_1.txt");
 
-        // 2. Launch GUI
         java.awt.EventQueue.invokeLater(() -> {
             gui = new PuzzleFrame();
             gui.setVisible(true);
             gui.updateFromEnvironment(env, 1);
         });
 
-        // 3. Wait for robots, then start
         doWait(2000); 
         addBehaviour(new GameLoop());
     }
@@ -42,7 +38,7 @@ public class SchedulerAgent extends Agent {
         @Override
         public void action() {
             switch (step) {
-                case 0: // Send Request
+                case 0:
                     ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
                     msg.addReceiver(new AID("Agent" + currentRobot, AID.ISLOCALNAME));
                     try {
@@ -52,11 +48,9 @@ public class SchedulerAgent extends Agent {
                     } catch (IOException e) { e.printStackTrace(); }
                     break;
 
-                case 1: // Wait Reply
+                case 1:
                     ACLMessage reply = myAgent.receive();
                     if (reply != null) {
-                        // --- SAFETY CHECK START ---
-                        // Only try to read the object if the robot actually replied with INFORM
                         if (reply.getPerformative() == ACLMessage.INFORM) {
                             try {
                                 env = (Environment) reply.getContentObject();
@@ -64,15 +58,13 @@ public class SchedulerAgent extends Agent {
                                 
                                 if ("true".equals(success)) changesInCycle = true;
 
-                                // Update GUI
                                 if (gui != null) {
                                     final int rID = currentRobot;
-                                    // Use SwingUtilities to be safe
                                     javax.swing.SwingUtilities.invokeLater(() -> gui.updateFromEnvironment(env, rID));
                                 }
 
                                 currentRobot++;
-                                if (currentRobot > 9) step = 2; // End of Cycle
+                                if (currentRobot > 9) step = 2;
                                 else {
                                     step = 0;
                                     doWait(100); 
@@ -83,22 +75,18 @@ public class SchedulerAgent extends Agent {
                             }
                         } 
                         else {
-                            // If we received a FAILURE/REFUSE/NOT_UNDERSTOOD message
                             System.out.println("Robot " + currentRobot + " returned error: " + ACLMessage.getPerformative(reply.getPerformative()));
                             System.out.println("Content: " + reply.getContent());
-                            // Skip this robot and move on to prevent freezing
                             currentRobot++;
                             if (currentRobot > 9) step = 2;
                             else step = 0;
                         }
-                        // --- SAFETY CHECK END ---
                     } else {
                         block();
                     }
                     break;
 
-                case 2: // Check Cycle Results
-                    // ... (keep your existing case 2 logic) ...
+                case 2:
                     System.out.println("--- Cycle Complete ---");
                     if (changesInCycle) {
                         currentRobot = 1;
