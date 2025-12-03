@@ -4,11 +4,13 @@
  */
 package sudoku;
 
+import java.io.Serializable;
+
 /**
  *
  * @author CEN
  */
-public class Position {
+public class Position implements Serializable{
     private int posX;
     private int posY;
     

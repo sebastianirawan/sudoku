@@ -40,7 +40,7 @@ public class PuzzleFrame extends javax.swing.JFrame {
         PP[7][5] = P86; PP[7][6] = P87; PP[7][7] = P88; PP[7][8] = P89; 
         PP[8][0] = P91; PP[8][1] = P92; PP[8][2] = P93; PP[8][3] = P94; PP[8][4] = P95;
         PP[8][5] = P96; PP[8][6] = P97; PP[8][7] = P98; PP[8][8] = P99; 
-        PuzzlePanel.setVisible(false);
+        PuzzlePanel.setVisible(true);
         Model1Menu.setSelected(true);
         this.model = 1;
         
@@ -55,7 +55,7 @@ public class PuzzleFrame extends javax.swing.JFrame {
         AB[6] = Agent7Box; AB[7] = Agent8Box; AB[8] = Agent9Box; 
         
         CB = new JComboBox[81];
-        AgentStatePanel.setVisible(false);
+        AgentStatePanel.setVisible(true);
         CB[0] = C11; CB[1] = C12; CB[2] = C13; CB[3] = C14; CB[4] = C15; CB[5] = C16; CB[6] = C17; CB[7] = C18; CB[8] = C19;     
         CB[9] = C21; CB[10] = C22; CB[11] = C23; CB[12] = C24; CB[13] = C25; CB[14] = C26; CB[15] = C27; CB[16] = C28; CB[17] = C29;     
         CB[18] = C31; CB[19] = C32; CB[20] = C33; CB[21] = C34; CB[22] = C35; CB[23] = C36; CB[24] = C37; CB[25] = C38; CB[26] = C39;     
