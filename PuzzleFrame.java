@@ -100,32 +100,32 @@ public class PuzzleFrame extends javax.swing.JFrame {
         PP[x][y].repaint();
     }
     
-    void updateState(State s){
-        for(int i=0;i<9;i++){
-            for (int j=0;j<9;j++) {
-                Box b = s.getBoard()[i][j].getBox();
-                if (b != null) PP[i][j].setText(String.valueOf(s.getBoard()[i][j].getBox().getValue()));
-                else PP[i][j].setText("");
-                PP[i][j].revalidate();
-                PP[i][j].repaint();
-            }
-        }
-        this.PuzzlePanel.revalidate(); this.PuzzlePanel. repaint();
+    // void updateState(State s){
+    //     for(int i=0;i<9;i++){
+    //         for (int j=0;j<9;j++) {
+    //             Box b = s.getBoard()[i][j].getBox();
+    //             if (b != null) PP[i][j].setText(String.valueOf(s.getBoard()[i][j].getBox().getValue()));
+    //             else PP[i][j].setText("");
+    //             PP[i][j].revalidate();
+    //             PP[i][j].repaint();
+    //         }
+    //     }
+    //     this.PuzzlePanel.revalidate(); this.PuzzlePanel. repaint();
         
-        for (int i=0;i<9;i++){
-            AB[i].setText(String.valueOf(s.getNumbers()[i]));
-            AB[i].revalidate(); AB[i].repaint();
-        }
+    //     for (int i=0;i<9;i++){
+    //         AB[i].setText(String.valueOf(s.getNumbers()[i]));
+    //         AB[i].revalidate(); AB[i].repaint();
+    //     }
         
-        for (int i=0;i<9;i++){
-            AS[i].setSelected(false);
-            AS[i].revalidate(); AS[i].repaint();            
-        }
-        AS[s.getAgentType()-1].setSelected(true);
-        AS[s.getAgentType()-1].revalidate(); AS[s.getAgentType()-1].repaint();   
+    //     for (int i=0;i<9;i++){
+    //         AS[i].setSelected(false);
+    //         AS[i].revalidate(); AS[i].repaint();            
+    //     }
+    //     AS[s.getAgentType()-1].setSelected(true);
+    //     AS[s.getAgentType()-1].revalidate(); AS[s.getAgentType()-1].repaint();   
         
-        this.AgentStatePanel.revalidate(); this.AgentStatePanel.repaint();
-    }
+    //     this.AgentStatePanel.revalidate(); this.AgentStatePanel.repaint();
+    // }
     
     void setAgentState(int i){
         AS[i].setSelected(true);
