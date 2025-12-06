@@ -156,50 +156,40 @@ public class PuzzleFrame extends javax.swing.JFrame {
         }
     }
 
-    // --- NEW METHOD: Allows JADE Scheduler to update the GUI ---
-    public void updateFromEnvironment(Environment env, int activeRobotID) {
-        // 1. Update the Grid (The 9x9 Board)
+    public void updateFromEnvironment(Environment env, int activeAgentId) {
         if (env.Board != null) {
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
-                    // Check if cell exists
                     if (env.Board[i][j] != null) {
                         Box b = env.Board[i][j].getBox();
                         boolean fixed = env.Board[i][j].isFixed();
-                        // Update the specific button
                         drawCell(i, j, b, fixed);
                     }
                 }
             }
         }
 
-        // 2. Update the "Boxes Remaining" counts (Text Fields on the left)
         if (env.numbers != null) {
             for (int i = 0; i < 9; i++) {
                 if (AB[i] != null) {
                     AB[i].setText(String.valueOf(env.numbers[i]));
-                    // Force visual refresh for text field
                     AB[i].revalidate();
                     AB[i].repaint();
                 }
             }
         }
 
-        // 3. Highlight the Active Robot (Radio Buttons)
-        // First, turn everyone off
         for (int i = 0; i < 9; i++) {
             if (AS[i] != null) AS[i].setSelected(false);
         }
         
-        // Then turn the current robot on (ID is 1-9, Array is 0-8)
-        if (activeRobotID >= 1 && activeRobotID <= 9) {
-            int index = activeRobotID - 1; 
+        if (activeAgentId >= 1 && activeAgentId <= 9) {
+            int index = activeAgentId - 1; 
             if (AS[index] != null) {
                 AS[index].setSelected(true);
             }
         }
         
-        // Final refresh of the main panel
         if (PuzzlePanel != null) {
             PuzzlePanel.revalidate();
             PuzzlePanel.repaint();
@@ -2420,34 +2410,42 @@ public class PuzzleFrame extends javax.swing.JFrame {
         Agent1Box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Agent1Box.setText("9");
 
+        Agent2Box.setEditable(false);
         Agent2Box.setFont(new java.awt.Font("Adobe Arabic", 0, 14)); // NOI18N
         Agent2Box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Agent2Box.setText("9");
 
+        Agent6Box.setEditable(false);
         Agent6Box.setFont(new java.awt.Font("Adobe Arabic", 0, 14)); // NOI18N
         Agent6Box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Agent6Box.setText("9");
 
+        Agent7Box.setEditable(false);
         Agent7Box.setFont(new java.awt.Font("Adobe Arabic", 0, 14)); // NOI18N
         Agent7Box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Agent7Box.setText("9");
 
+        Agent8Box.setEditable(false);
         Agent8Box.setFont(new java.awt.Font("Adobe Arabic", 0, 14)); // NOI18N
         Agent8Box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Agent8Box.setText("9");
 
+        Agent9Box.setEditable(false);
         Agent9Box.setFont(new java.awt.Font("Adobe Arabic", 0, 14)); // NOI18N
         Agent9Box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Agent9Box.setText("9");
 
+        Agent5Box.setEditable(false);
         Agent5Box.setFont(new java.awt.Font("Adobe Arabic", 0, 14)); // NOI18N
         Agent5Box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Agent5Box.setText("9");
 
+        Agent3Box.setEditable(false);
         Agent3Box.setFont(new java.awt.Font("Adobe Arabic", 0, 14)); // NOI18N
         Agent3Box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Agent3Box.setText("9");
 
+        Agent4Box.setEditable(false);
         Agent4Box.setFont(new java.awt.Font("Adobe Arabic", 0, 14)); // NOI18N
         Agent4Box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Agent4Box.setText("9");
@@ -2623,7 +2621,7 @@ public class PuzzleFrame extends javax.swing.JFrame {
 
         MenuBar.add(MASMenu);
 
-        setJMenuBar(MenuBar);
+        // setJMenuBar(MenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
