@@ -25,7 +25,7 @@ public class SchedulerAgent extends Agent {
         env = new Environment();
         boolean loaded = env.readAPuzzle("sudoku_5.txt");
         if(loaded) env.SetupBoxStacks();
-        else System.out.println("Warning: failed to load sudoku puzzle");
+        else System.out.println("WARNING: failed to load sudoku puzzle, check the puzzle path in SchedulerAgent.java line:26");
 
         java.awt.EventQueue.invokeLater(() -> {
             gui = new PuzzleFrame();
