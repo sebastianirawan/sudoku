@@ -2,7 +2,6 @@ package sudoku;
 
 import java.io.IOException;
 
-import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.*;
 import jade.lang.acl.ACLMessage;
@@ -17,30 +16,35 @@ public class NumberAgent extends Agent{
         if (args != null && args.length > 0) {
             myNumber = Integer.parseInt((String) args[0]);
         }
-        System.out.println("Robot " + myNumber + " is online.");
+        System.out.println("Agent " + myNumber + " is online.");
 
-        addBehaviour(new CyclicBehaviour() {
-            @Override
-            public void action() {
-                ACLMessage msg = receive();
-                if (msg != null) {
-                    try {
-                        Environment env = (Environment) msg.getContentObject();
-                        boolean success = performLogic(env);
-                        ACLMessage reply = msg.createReply();
-                        reply.setPerformative(ACLMessage.INFORM);
-                        reply.setContentObject(env);
-                        reply.addUserDefinedParameter("success", String.valueOf(success));
-                        send(reply);
+        addBehaviour(new playingBehaviour(this));
+    }
 
-                    } catch (UnreadableException | IOException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    block();
+    class playingBehaviour extends CyclicBehaviour {
+        public playingBehaviour (Agent a) {
+            super(a);
+        }
+
+        public void action() {
+            ACLMessage msg = receive();
+            if (msg != null) {
+                try {
+                    Environment env = (Environment) msg.getContentObject();
+                    boolean success = performLogic(env);
+                    ACLMessage reply = msg.createReply();
+                    reply.setPerformative(ACLMessage.INFORM);
+                    reply.setContentObject(env);
+                    reply.addUserDefinedParameter("success", String.valueOf(success));
+                    send(reply);
+
+                } catch (UnreadableException | IOException e) {
+                    e.printStackTrace();
                 }
+            } else {
+                block();
             }
-        });
+        }
     }
 
     private boolean performLogic(Environment env) {
@@ -65,7 +69,7 @@ public class NumberAgent extends Agent{
             int r = 0, c = 0;
             if (type.equals("ROW")) { r = unitIndex; c = k; }
             else if (type.equals("COL")) { r = k; c = unitIndex; }
-            else { // BLOCK
+            else {
                 r = (unitIndex / 3) * 3 + (k / 3);
                 c = (unitIndex % 3) * 3 + (k % 3);
             }
@@ -88,7 +92,7 @@ public class NumberAgent extends Agent{
         if (validCount == 1) {
             env.Board[targetR][targetC].setBox(new Box(myNumber));
             env.numbers[myNumber-1]--;
-            System.out.println("Robot " + myNumber + " placed at (" + targetR + "," + targetC + ")");
+            System.out.println("Agent " + myNumber + " placed at (" + targetR + "," + targetC + ")");
             return true;
         }
         return false;

@@ -5,6 +5,9 @@ import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class SchedulerAgent extends Agent {
     private Environment env;
@@ -12,14 +15,17 @@ public class SchedulerAgent extends Agent {
     private int currentRobot = 1;
     private boolean changesInCycle = false;
 
+    private Integer[] agentOrder = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    private int currentIndex = 0;
+
     @Override
     protected void setup() {
-        System.out.println("Scheduler Starting...");
+        System.out.println("Scheduler starting...");
 
         env = new Environment();
-        boolean loaded = env.readAPuzzle("sudoku_junior_1.txt");
+        boolean loaded = env.readAPuzzle("sudoku_5.txt");
         if(loaded) env.SetupBoxStacks();
-        else System.out.println("Warning: Failed to load sudoku_junior_1.txt");
+        else System.out.println("WARNING: failed to load sudoku puzzle, check the puzzle path in SchedulerAgent.java line:26");
 
         java.awt.EventQueue.invokeLater(() -> {
             gui = new PuzzleFrame();
@@ -27,8 +33,18 @@ public class SchedulerAgent extends Agent {
             gui.updateFromEnvironment(env, 1);
         });
 
+        shuffleAgents();
+
         doWait(2000); 
         addBehaviour(new GameLoop());
+    }
+
+    private void shuffleAgents() {
+        List<Integer> list = Arrays.asList(agentOrder);
+        Collections.shuffle(list);
+        list.toArray(agentOrder);
+        System.out.print("New Agent Order: " + Arrays.toString(agentOrder));
+        System.out.println();
     }
 
     private class GameLoop extends Behaviour {
@@ -39,8 +55,10 @@ public class SchedulerAgent extends Agent {
         public void action() {
             switch (step) {
                 case 0:
+                    int actualAgentID = agentOrder[currentIndex];
+
                     ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
-                    msg.addReceiver(new AID("Agent" + currentRobot, AID.ISLOCALNAME));
+                    msg.addReceiver(new AID("Agent" + actualAgentID, AID.ISLOCALNAME));
                     try {
                         msg.setContentObject(env);
                         myAgent.send(msg);
@@ -59,26 +77,28 @@ public class SchedulerAgent extends Agent {
                                 if ("true".equals(success)) changesInCycle = true;
 
                                 if (gui != null) {
-                                    final int rID = currentRobot;
+                                    final int rID = agentOrder[currentIndex];
                                     javax.swing.SwingUtilities.invokeLater(() -> gui.updateFromEnvironment(env, rID));
                                 }
 
-                                currentRobot++;
-                                if (currentRobot > 9) step = 2;
+                                // currentRobot++;
+                                currentIndex++;
+                                if (currentIndex > 8) step = 2;
                                 else {
                                     step = 0;
                                     doWait(100); 
                                 }
                             } catch (Exception e) { 
-                                System.out.println("Error reading robot reply: " + e.getMessage());
+                                System.out.println("Error reading agent reply: " + e.getMessage());
                                 e.printStackTrace();
                             }
                         } 
                         else {
-                            System.out.println("Robot " + currentRobot + " returned error: " + ACLMessage.getPerformative(reply.getPerformative()));
+                            System.out.println("Agent " + currentRobot + " returned error: " + ACLMessage.getPerformative(reply.getPerformative()));
                             System.out.println("Content: " + reply.getContent());
-                            currentRobot++;
-                            if (currentRobot > 9) step = 2;
+                            // currentRobot++;
+                            currentIndex++;
+                            if (currentIndex > 8) step = 2;
                             else step = 0;
                         }
                     } else {
@@ -89,7 +109,8 @@ public class SchedulerAgent extends Agent {
                 case 2:
                     System.out.println("--- Cycle Complete ---");
                     if (changesInCycle) {
-                        currentRobot = 1;
+                        shuffleAgents();
+                        currentIndex = 0;
                         changesInCycle = false;
                         step = 0; 
                     } else {
