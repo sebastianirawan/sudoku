@@ -1,12 +1,12 @@
 pake command args:
 -agents "Scheduler:sudoku.SchedulerAgent;Agent1:sudoku.NumberAgent(1);Agent2:sudoku.NumberAgent(2);Agent3:sudoku.NumberAgent(3);Agent4:sudoku.NumberAgent(4);Agent5:sudoku.NumberAgent(5);Agent6:sudoku.NumberAgent(6);Agent7:sudoku.NumberAgent(7);Agent8:sudoku.NumberAgent(8);Agent9:sudoku.NumberAgent(9)"
 
-copas isi folder "soal sudoku" ke root folder:
+letakan soal-soal sudoku pada root folder:
 
 YOUR_PROJ_NAME
 |- lib
 |- src
-|- sudoku_junior_1.txt
-|- sudoku_junior_2.txt
-|- sudoku_1.txt
+|- sudoku1.txt
+|- sudoku2.txt
+|- sudoku3.txt
 |- ...
